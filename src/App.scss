@@ -1,0 +1,144 @@
+$line-color: rgba(132, 142, 179, 0.2);
+
+@mixin planet-container($height, $width) {
+    border: 1px solid $line-color;
+    border-radius: 50%;
+    height: $height;
+    width: $width;
+    position: relative;
+    @media (max-width: 800px) {
+      left: 17px;
+      top: 17px;
+    }
+    @media (min-width:800px) {
+      left: 27px;
+      top: 27px;
+    }
+}
+
+@mixin planet-body($height, $width, $color, $top, $left) {
+  content: '';
+  position: absolute;
+  height: $height;
+  width: $width;
+  background-color: $color;
+  border-radius: 50%;
+  top: $top;
+  left: $left;
+}
+
+@mixin hover-planet($planet-color) {
+  // &:hover {
+  //   cursor: pointer;
+  //   box-shadow: 0 0 30px $planet-color;
+  // }
+}
+
+.Container {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: rgb(58,75,142);
+  background: radial-gradient(circle, rgba(58,75,142,1) 0%, rgb(5, 7, 15) 35%, rgba(6,11,30,1) 100%);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+
+  .neptune {
+    margin-top: 27px;
+    border: 1px solid $line-color;
+    border-radius: 50%;
+    height: 90vh;
+    width: 90vh;
+    position: relative;
+    animation: orbit infinite 60s linear;
+    @include hover-planet(white);
+    .neptune-planet {
+      @include planet-body(25px, 25px, #3575BF, -13px, 50% );
+    }
+
+    @keyframes orbit {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .uranus {
+      @include planet-container( 80vh, 80vh );
+      &::before {
+        @include planet-body(18px, 18px, #449BFD, -8px, 50% );
+      }
+      animation: orbit infinite 55s linear;
+      .saturn {
+        @include planet-container( 70vh, 70vh );
+        animation: orbit infinite 50s linear;
+        &::before {
+          @include planet-body(10px, 10px, #E3F318, -5px, 50% );
+        }
+        .jupiter {
+          @include planet-container( 60vh, 60vh );
+          animation: orbit infinite 49s linear;
+        &::before {
+          @include planet-body(6px, 6px, #ED8100, -3px, 50% );
+        }
+          .mars {
+            @include planet-container( 50vh, 50vh );
+            animation: orbit infinite 40s linear;
+        &::before {
+          @include planet-body(3px, 3px, #F37138, -2px, 50% );
+        }
+            .earth {
+              @include planet-container( 40vh, 40vh );
+              animation: orbit infinite 45s linear;
+        &::before {
+          @include planet-body(5px, 5px, #5B79F2, -3px, 50% );
+        }
+              .venus{ 
+                @include planet-container( 30vh, 30vh );
+                animation: orbit infinite 50s linear;
+        &::before {
+          @include planet-body(3px, 3px, #E6EE6D, -2px, 50% );
+        }
+                .mercury {
+                  @include planet-container( 20vh, 20vh );
+                  animation: orbit infinite 10s linear;
+                  &::before {
+                    @include planet-body(3px, 3px, #D3D3D3, -2px, 50% );
+                  }
+                  
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+    .sun {
+      border-radius: 50%;
+      background-color: rgb(229, 230, 203);
+      height: 25px;
+      width: 25px;
+      position: relative;
+      top: 48%;
+      right: 24%;
+      box-shadow: 0 0 30px white;
+      &:hover {
+        @include hover-planet(white);
+      }
+      @media (max-width: 800px) {
+        top: 49%;
+        right: 24%;
+      }
+      @media (max-width: 600px) {
+        top: 49%;
+        right: 30%;
+      }
+      @media (max-width: 500px) {
+        right: 30%;
+      }
+    }
+}
