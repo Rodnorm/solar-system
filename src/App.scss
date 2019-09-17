@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
 $line-color: rgba(132, 142, 179, 0.2);
 
 @mixin planet-container($height, $width) {
@@ -27,11 +29,20 @@ $line-color: rgba(132, 142, 179, 0.2);
   left: $left;
 }
 
-@mixin hover-planet($planet-color) {
-  // &:hover {
-  //   cursor: pointer;
-  //   box-shadow: 0 0 30px $planet-color;
-  // }
+@mixin planet-click($color) {
+  border-radius: 50%;
+  position: relative;
+  height: 40px;
+  width: 40px;
+  background: $color;
+  animation: none;
+}
+
+@mixin planet-hover() {
+  &:hover:not(.selected) {
+    box-shadow: 0 0 30px white;
+    cursor: pointer;
+  }
 }
 
 .Container {
@@ -52,8 +63,7 @@ $line-color: rgba(132, 142, 179, 0.2);
     width: 90vh;
     position: relative;
     animation: orbit infinite 60s linear;
-    @include hover-planet(white);
-    .neptune-planet {
+    &::before {
       @include planet-body(25px, 25px, #3575BF, -13px, 50% );
     }
 
@@ -126,9 +136,6 @@ $line-color: rgba(132, 142, 179, 0.2);
       top: 48%;
       right: 24%;
       box-shadow: 0 0 30px white;
-      &:hover {
-        @include hover-planet(white);
-      }
       @media (max-width: 800px) {
         top: 49%;
         right: 24%;
@@ -141,4 +148,128 @@ $line-color: rgba(132, 142, 179, 0.2);
         right: 30%;
       }
     }
+
+    .planets-container {
+      position: absolute;
+      left: 0;
+      width: 158px;
+      height: 50%;
+      padding: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .neptune-planet {
+        @include planet-hover();
+        @include planet-click(#407af7);
+        box-shadow: inset 11px 10px 9px -4px rgba(34,63,125,1);
+      }
+      .uranus-planet {
+        @include planet-hover();
+        @include planet-click(#9DB1BF);
+        box-shadow: inset 11px 10px 9px -4px rgba(86, 102, 112, 1);
+      }
+      .saturn-planet {
+        @include planet-hover();
+        @include planet-click(#D1AA5E);
+        box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54,1);
+        &::after {
+          content: '';
+          background: transparent;
+          border-top: none;
+          border-bottom: 4px solid #a98236;
+          border-left: 10px solid #a98236;
+          height: 28px;
+          left: -18px;
+          top: 6px;
+          width: 50px;
+          position: absolute;
+          border-radius: 50%;
+          transform: rotate(-30deg) skew(-12deg, -8deg);
+        }
+        &::before {
+          content: '';
+          background: transparent;
+          border-bottom: none;
+          border-right: 4px solid #a98236;
+          border-top: 5px solid #a98236;
+          height: 30px;
+          left: -10px;
+          top: -2px;
+          width: 52px;
+          transform: scaleX(-1) skew(0deg, 8deg) rotate(222deg);
+          position: absolute;
+          border-radius: 50%;
+        }
+      }
+      .jupiter-planet {
+        @include planet-hover();
+        @include planet-click(linear-gradient(#E89150 5px, #ffc382 7px, #D16F1B 18px, #ffc382 20px, #D16F1B 23px, #ffc382 40px, #E89150 75px));
+        box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54, .5);
+      }
+      .mars-planet {
+        @include planet-hover();
+        @include planet-click(#C25447);
+        box-shadow: inset 11px 10px 9px -4px rgba(102, 44, 37,1);
+      }
+      .earth-planet {
+        @include planet-hover();
+        @include planet-click(#496282);
+        box-shadow: inset 11px 10px 9px -4px rgba(41, 56, 74,1);
+      }
+      .venus-planet {
+        @include planet-hover();
+        @include planet-click(linear-gradient(#e5875f 5px, #c2643c 7px, #D1734B 18px, #ea8c64 20px, #c76941 25px));
+        transform: rotate(45deg);
+        box-shadow: inset 11px 10px 9px -4px rgba(145, 73, 42, .5);
+      }
+      .mercury-planet {
+        @include planet-hover();
+        @include planet-click(#76777A);
+        box-shadow: inset 11px 10px 9px -4px rgba(54, 56, 61, 1);
+      }
+    }
+
+    .card-container {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      max-width: 220px;
+      min-width: 200px;
+      height: 300px;
+      border-radius: 10px 2px 2px 10px;
+      background-color: #407076;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $line-color;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      .card-head {
+        img {
+          max-width: 218px;
+          border-radius: 10px 0 0 0;
+        }
+      }
+
+      .card-body {
+        p {
+          font-family: 'Raleway', sans-serif;
+          font-size: 10px;
+        }
+      }
+
+      .selected {
+        box-shadow: 0 0 30px white !important;
+        cursor: pointer;
+      }
+  }
 }
