@@ -1,11 +1,26 @@
 import React from 'react';
 import './App.scss';
+import axios from 'axios';
+import loader from './assets/imgs/loader.gif';
+import neptune from './assets/imgs/neptune.jpg';
+import uranus from './assets/imgs/uranus.jpg';
+import jupiter from './assets/imgs/jupiter.jpg';
+import saturn from './assets/imgs/saturn.jpg';
+import mars from './assets/imgs/mars.jpg';
+import earth from './assets/imgs/earth.jpg';
+import venus from './assets/imgs/venus.jpg';
+import mercury from './assets/imgs/mercury.jpg';
 
+
+const illustrations = { neptune,uranus, jupiter, saturn, mars, earth,venus, mercury };
 
 class App extends React.Component {
   constructor (props) {
     super(props);
       this.state = {
+        minimizeCard: true,
+        planet: null,
+        loading: false,
         neptune: false,
         uranus: false,
         saturn: false,
@@ -15,12 +30,40 @@ class App extends React.Component {
         venus: false,
         mercury: false,
       }
-    
+  }
+
+  async getData(planet) {
+    this.setState({ loading: true });
+    const response = 
+    await axios.get(`https://cors-anywhere.herokuapp.com/https://dry-plains-91502.herokuapp.com/planets/${planet}`);
+    this.mountPlanet(response.data);
+    this.setState({ loading: false });
+  }
+
+  mountPlanet(data) {
+    const planet = {
+      illustration: illustrations[data.name.toLowerCase()],
+      name: data.name,
+      diameter: data.diameter,
+      density: data.density,
+      gravity: data.gravity,
+      mass: data.mass,
+      distanceFromSun: data.distance_from_sun,
+      numberOfMoons: data.number_of_moons,
+      rotationPeriod: data.rotation_period
+    }
+    this.setState({ planet });
   }
 
   render() {
+    const toggleState = (planet) => {
+      let planets = this.state;
+      Object.keys(planets).forEach(pl => pl === planet ? planets[planet] = !planets[planet] : planets[pl] = false);
+      this.setState(planets);
+      this.getData(planet);
+    }
+    const { planet } = this.state;
     return(
-
     <div className="Container">
       <div className="neptune">
         <div className="uranus">
@@ -39,39 +82,51 @@ class App extends React.Component {
       </div>
       <div className="sun"></div>
       <div className="planets-container">
-        <div className={this.state.neptune ? 'neptune-planet selected' : 'neptune-planet' } onClick={() => this.setState({ neptune : !this.state.neptune })}></div>
-        <div className="uranus-planet" onClick={() => this.setState({ uranus : !this.state.uranus })}></div>
-        <div className="saturn-planet" onClick={() => this.setState({ saturn : !this.state.saturn })}></div>
-        <div className="jupiter-planet" onClick={() => this.setState({ jupiter : !this.state.jupiter })}></div>
-        <div className="mars-planet" onClick={() => this.setState({ mars : !this.state.mars })}></div>
-        <div className="earth-planet" onClick={() => this.setState({ earth : !this.state.earth })}></div>
-        <div className="venus-planet" onClick={() => this.setState({ venus : !this.state.venus })}></div>
-        <div className="mercury-planet" onClick={() => this.setState({ mercury : !this.state.mercury })}></div>
+        <div className={this.state.neptune ? 'neptune-planet selected' : 'neptune-planet' } onClick={() => toggleState('neptune')}></div>
+        <div className={this.state.uranus ? 'uranus-planet selected' : 'uranus-planet' } onClick={() => toggleState('uranus')}></div>
+        <div className={this.state.saturn ? 'saturn-planet selected' : 'saturn-planet'} onClick={() => toggleState('saturn')}></div>
+        <div className={this.state.jupiter ? 'jupiter-planet selected' : 'jupiter-planet'} onClick={() => toggleState('jupiter')}></div>
+        <div className={this.state.mars ? 'mars-planet selected' : 'mars-planet'} onClick={() => toggleState('mars')}></div>
+        <div className={this.state.earth ? 'earth-planet selected' : 'earth-planet'} onClick={() => toggleState('earth')}></div>
+        <div className={this.state.venus ? 'venus-planet selected' : 'venus-planet'} onClick={() => toggleState('venus')}></div>
+        <div className={this.state.mercury ? 'mercury-planet selected' : 'mercury-planet'} onClick={() => toggleState('mercury')}></div>
       </div>
-      <section className="card-container">
-        <div className="card-head">
-          <img src="https://static01.nyt.com/images/2014/08/19/science/19timetravel-neptune-1989/19timetravel-neptune-1989-articleLarge.jpg"/>
-        </div>
-        <div className="card-body">
-          <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
-          a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-          Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions
-          of Lorem Ipsum
-          </p>
-        </div>
-      </section>
+      
+        <section className="card-container">
+          {(!planet && !this.state.loading) && (
+            <div className="info-panel">
+              <p>Click a planet on the left to see some data xD</p>
+            </div>
+          )}
+          { (this.state.loading) && (
+            <div className="loader">
+              <img src={loader} alt="Loader"/>
+              <p>Collecting data...</p>
+            </div>
+          )}
+        {(planet && !this.state.loading) && (
+          <>
+          <div className="card-head">
+            <img src={planet.illustration} alt={planet.name}/>
+          </div>
+          <div className="card-body">
+            <h3>{planet.name}</h3>
+            <ul>
+              <li>Diameter: {planet.diameter}</li>
+              <li>Density: {planet.density}</li>
+              <li>Gravity: {planet.gravity}</li>
+              <li>Mass: {planet.mass}</li>
+              <li>Distance from Sun: {planet.distanceFromSun}</li>
+              <li>Number of Moons: {planet.numberOfMoons}</li>
+              <li>Rotation Period: {planet.rotationPeriod}</li>
+            </ul>
+          </div>
+          </>
+        )}
+        </section>
     </div>
     )
   }
 
 }
-
-// function App() {
-//   return (
-//   );
-// }
-
 export default App;

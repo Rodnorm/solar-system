@@ -18,6 +18,17 @@ $line-color: rgba(132, 142, 179, 0.2);
     }
 }
 
+@mixin fonts() {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  p {
+    padding: .5rem;
+    font-size: 10px;
+    font-family: 'Raleway', sans-serif;
+  }
+}
+
 @mixin planet-body($height, $width, $color, $top, $left) {
   content: '';
   position: absolute;
@@ -261,15 +272,28 @@ $line-color: rgba(132, 142, 179, 0.2);
       }
 
       .card-body {
-        p {
+        padding: .5rem;
+        ul li {
           font-family: 'Raleway', sans-serif;
           font-size: 10px;
         }
+        h3 {
+          font-family: 'Raleway', sans-serif;
+        }
       }
+      .info-panel {
+        @include fonts();
+      }
+      .loader {
+      @include fonts();
+        img {
+          width: 200px;
+        }
+      } 
+    }
 
-      .selected {
-        box-shadow: 0 0 30px white !important;
-        cursor: pointer;
-      }
-  }
+    .selected {
+      box-shadow: 0 0 30px white !important;
+      cursor: pointer;
+    }
 }
