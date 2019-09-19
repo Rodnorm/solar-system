@@ -65,14 +65,14 @@ class App extends React.Component {
     const { planet } = this.state;
     return(
     <div className="Container">
-      <div className="neptune">
-        <div className="uranus">
-          <div className="saturn">
-            <div className="jupiter">
-              <div className="mars">
-                <div className="earth">
-                  <div className="venus">
-                    <div className="mercury"></div>
+      <div className={this.state.neptune ? 'neptune highlight' : 'neptune'}>
+        <div className={this.state.uranus ? 'uranus highlight' : 'uranus'}>
+          <div className={this.state.saturn ? 'saturn highlight' : 'saturn'}>
+            <div className={this.state.jupiter ? 'jupiter highlight' : 'jupiter'}>
+              <div className={this.state.mars ? 'mars highlight' : 'mars'}>
+                <div className={this.state.earth ? 'earth highlight' : 'earth'}>
+                  <div className={this.state.venus ? 'venus highlight' : 'venus'}>
+                    <div className={this.state.mercury ? 'mercury highlight' : 'mercury'}></div>
                   </div>
                 </div>
               </div>

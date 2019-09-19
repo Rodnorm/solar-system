@@ -3,18 +3,26 @@
 $line-color: rgba(132, 142, 179, 0.2);
 
 @mixin planet-container($height, $width) {
+
     border: 1px solid $line-color;
     border-radius: 50%;
     height: $height;
     width: $width;
     position: relative;
-    @media (max-width: 800px) {
-      left: 17px;
-      top: 17px;
+
+    @media (min-width: 1000px) {
+      left: 30px;
+      top: 30px;
     }
-    @media (min-width:800px) {
-      left: 27px;
-      top: 27px;
+
+    @media (min-width: 1500px) {
+      left: 45px;
+      top: 45px;
+    }
+
+    @media(min-width: 400px) and (max-width: 699px) {
+      left: 32px;
+      top: 32px;
     }
 }
 
@@ -24,7 +32,6 @@ $line-color: rgba(132, 142, 179, 0.2);
   flex-direction: column;
   p {
     padding: .5rem;
-    font-size: 10px;
     font-family: 'Raleway', sans-serif;
   }
 }
@@ -43,8 +50,8 @@ $line-color: rgba(132, 142, 179, 0.2);
 @mixin planet-click($color) {
   border-radius: 50%;
   position: relative;
-  height: 40px;
-  width: 40px;
+  height: 80px;
+  width: 80px;
   background: $color;
   animation: none;
 }
@@ -75,7 +82,7 @@ $line-color: rgba(132, 142, 179, 0.2);
     position: relative;
     animation: orbit infinite 60s linear;
     &::before {
-      @include planet-body(25px, 25px, #3575BF, -13px, 50% );
+      @include planet-body(40px, 40px, #3575BF, -22px, 50% );
     }
 
     @keyframes orbit {
@@ -90,44 +97,44 @@ $line-color: rgba(132, 142, 179, 0.2);
     .uranus {
       @include planet-container( 80vh, 80vh );
       &::before {
-        @include planet-body(18px, 18px, #449BFD, -8px, 50% );
+        @include planet-body(25px, 25px, #449BFD, -12px, 50% );
       }
       animation: orbit infinite 55s linear;
       .saturn {
         @include planet-container( 70vh, 70vh );
         animation: orbit infinite 50s linear;
         &::before {
-          @include planet-body(10px, 10px, #E3F318, -5px, 50% );
+          @include planet-body(20px, 20px, #E3F318, -10px, 50% );
         }
         .jupiter {
           @include planet-container( 60vh, 60vh );
           animation: orbit infinite 49s linear;
         &::before {
-          @include planet-body(6px, 6px, #ED8100, -3px, 50% );
+          @include planet-body(15px, 15px, #ED8100, -8px, 50% );
         }
           .mars {
             @include planet-container( 50vh, 50vh );
             animation: orbit infinite 40s linear;
         &::before {
-          @include planet-body(3px, 3px, #F37138, -2px, 50% );
+          @include planet-body(7px, 7px, #F37138, -4px, 50% );
         }
             .earth {
               @include planet-container( 40vh, 40vh );
               animation: orbit infinite 45s linear;
         &::before {
-          @include planet-body(5px, 5px, #5B79F2, -3px, 50% );
+          @include planet-body(10px, 10px, #5B79F2, -4px, 50% );
         }
               .venus{ 
                 @include planet-container( 30vh, 30vh );
                 animation: orbit infinite 50s linear;
         &::before {
-          @include planet-body(3px, 3px, #E6EE6D, -2px, 50% );
+          @include planet-body(10px, 10px, #E6EE6D, -5px, 50% );
         }
                 .mercury {
                   @include planet-container( 20vh, 20vh );
                   animation: orbit infinite 10s linear;
                   &::before {
-                    @include planet-body(3px, 3px, #D3D3D3, -2px, 50% );
+                    @include planet-body(10px, 10px, #D3D3D3, -4px, 50% );
                   }
                   
                 }
@@ -141,11 +148,11 @@ $line-color: rgba(132, 142, 179, 0.2);
     .sun {
       border-radius: 50%;
       background-color: rgb(229, 230, 203);
-      height: 25px;
-      width: 25px;
+      height: 40px;
+      width: 40px;
       position: relative;
-      top: 48%;
-      right: 24%;
+      top: 46%;
+      right: 24%;  
       box-shadow: 0 0 30px white;
       @media (max-width: 800px) {
         top: 49%;
@@ -163,7 +170,7 @@ $line-color: rgba(132, 142, 179, 0.2);
     .planets-container {
       position: absolute;
       left: 0;
-      width: 158px;
+      width: 300px;
       height: 50%;
       padding: 1rem;
       display: flex;
@@ -173,41 +180,47 @@ $line-color: rgba(132, 142, 179, 0.2);
       .neptune-planet {
         @include planet-hover();
         @include planet-click(#407af7);
-        box-shadow: inset 11px 10px 9px -4px rgba(34,63,125,1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(34,63,125,1);
+        }
       }
       .uranus-planet {
         @include planet-hover();
         @include planet-click(#9DB1BF);
-        box-shadow: inset 11px 10px 9px -4px rgba(86, 102, 112, 1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(86, 102, 112, 1);
+        }
       }
       .saturn-planet {
         @include planet-hover();
         @include planet-click(#D1AA5E);
-        box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54,1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54,1);
+        }
         &::after {
           content: '';
           background: transparent;
           border-top: none;
-          border-bottom: 4px solid #a98236;
+          border-bottom: 1px solid #a98236;
           border-left: 10px solid #a98236;
-          height: 28px;
+          height: 23px;
           left: -18px;
-          top: 6px;
-          width: 50px;
+          top: 48px;
+          width: 70px;
           position: absolute;
           border-radius: 50%;
-          transform: rotate(-30deg) skew(-12deg, -8deg);
+          transform: rotate(-23deg) skew(-12deg, -9deg);
         }
         &::before {
           content: '';
           background: transparent;
           border-bottom: none;
-          border-right: 4px solid #a98236;
+          border-right: 14px solid #a98236;
           border-top: 5px solid #a98236;
-          height: 30px;
+          height: 31px;
           left: -10px;
-          top: -2px;
-          width: 52px;
+          top: 16px;
+          width: 97px;
           transform: scaleX(-1) skew(0deg, 8deg) rotate(222deg);
           position: absolute;
           border-radius: 50%;
@@ -216,28 +229,38 @@ $line-color: rgba(132, 142, 179, 0.2);
       .jupiter-planet {
         @include planet-hover();
         @include planet-click(linear-gradient(#E89150 5px, #ffc382 7px, #D16F1B 18px, #ffc382 20px, #D16F1B 23px, #ffc382 40px, #E89150 75px));
-        box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54, .5);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(122, 99, 54, .5);
+        }
       }
       .mars-planet {
         @include planet-hover();
         @include planet-click(#C25447);
-        box-shadow: inset 11px 10px 9px -4px rgba(102, 44, 37,1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(102, 44, 37,1);
+        }
       }
       .earth-planet {
         @include planet-hover();
         @include planet-click(#496282);
-        box-shadow: inset 11px 10px 9px -4px rgba(41, 56, 74,1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(41, 56, 74,1);
+        }
       }
       .venus-planet {
         @include planet-hover();
         @include planet-click(linear-gradient(#e5875f 5px, #c2643c 7px, #D1734B 18px, #ea8c64 20px, #c76941 25px));
         transform: rotate(45deg);
-        box-shadow: inset 11px 10px 9px -4px rgba(145, 73, 42, .5);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(145, 73, 42, .5);
+        }
       }
       .mercury-planet {
         @include planet-hover();
         @include planet-click(#76777A);
-        box-shadow: inset 11px 10px 9px -4px rgba(54, 56, 61, 1);
+        &:not(.selected) {
+          box-shadow: inset 11px 10px 9px -4px rgba(54, 56, 61, 1);
+        }
       }
     }
 
@@ -245,9 +268,9 @@ $line-color: rgba(132, 142, 179, 0.2);
       position: absolute;
       right: 10px;
       top: 10px;
-      max-width: 220px;
-      min-width: 200px;
-      height: 300px;
+      // max-width: 220px;
+      min-width: 350px;
+      height: auto;
       border-radius: 10px 2px 2px 10px;
       background-color: #407076;
       overflow: auto;
@@ -266,7 +289,7 @@ $line-color: rgba(132, 142, 179, 0.2);
 
       .card-head {
         img {
-          max-width: 218px;
+          min-width: 350px;
           border-radius: 10px 0 0 0;
         }
       }
@@ -275,25 +298,27 @@ $line-color: rgba(132, 142, 179, 0.2);
         padding: .5rem;
         ul li {
           font-family: 'Raleway', sans-serif;
-          font-size: 10px;
         }
         h3 {
           font-family: 'Raleway', sans-serif;
+          margin: 0;
         }
       }
-      .info-panel {
+      .info-panel, .loader {
         @include fonts();
-      }
-      .loader {
-      @include fonts();
         img {
-          width: 200px;
+          width: 300px;
         }
-      } 
+      }
     }
 
     .selected {
-      box-shadow: 0 0 30px white !important;
+      box-shadow: 0 0 30px white;
       cursor: pointer;
+    }
+    .highlight {
+      &::before {
+        box-shadow: 0 0 56px 15px white;
+      }
     }
 }
