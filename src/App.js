@@ -12,13 +12,15 @@ import venus from './assets/imgs/venus.jpg';
 import mercury from './assets/imgs/mercury.jpg';
 
 
-const illustrations = { neptune,uranus, jupiter, saturn, mars, earth,venus, mercury };
+const illustrations = { neptune, uranus, jupiter, saturn, mars, earth, venus, mercury };
 
 class App extends React.Component {
   constructor (props) {
     super(props);
       this.state = {
-        minimizeCard: true,
+        cardClosed: true,
+        notify: false,
+        firstClick: false,
         planet: null,
         loading: false,
         neptune: false,
@@ -37,7 +39,7 @@ class App extends React.Component {
     const response = 
     await axios.get(`https://cors-anywhere.herokuapp.com/https://dry-plains-91502.herokuapp.com/planets/${planet}`);
     this.mountPlanet(response.data);
-    this.setState({ loading: false });
+    this.setState({ loading: false, notify: true });
   }
 
   mountPlanet(data) {
@@ -64,23 +66,29 @@ class App extends React.Component {
     }
     const { planet } = this.state;
     return(
+      <>
+      <div className="stars">
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+      </div>
     <div className="Container">
-      <div className={this.state.neptune ? 'neptune highlight' : 'neptune'}>
-        <div className={this.state.uranus ? 'uranus highlight' : 'uranus'}>
-          <div className={this.state.saturn ? 'saturn highlight' : 'saturn'}>
-            <div className={this.state.jupiter ? 'jupiter highlight' : 'jupiter'}>
-              <div className={this.state.mars ? 'mars highlight' : 'mars'}>
-                <div className={this.state.earth ? 'earth highlight' : 'earth'}>
-                  <div className={this.state.venus ? 'venus highlight' : 'venus'}>
-                    <div className={this.state.mercury ? 'mercury highlight' : 'mercury'}></div>
+        <div className={this.state.neptune ? 'neptune highlight' : 'neptune'}>
+          <div className={this.state.uranus ? 'uranus highlight' : 'uranus'}>
+            <div className={this.state.saturn ? 'saturn highlight' : 'saturn'}>
+              <div className={this.state.jupiter ? 'jupiter highlight' : 'jupiter'}>
+                <div className={this.state.mars ? 'mars highlight' : 'mars'}>
+                  <div className={this.state.earth ? 'earth highlight' : 'earth'}>
+                    <div className={this.state.venus ? 'venus highlight' : 'venus'}>
+                      <div className={this.state.mercury ? 'mercury highlight' : 'mercury'}></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="sun"></div>
+        <div className="sun"></div>
       <div className="planets-container">
         <div className={this.state.neptune ? 'neptune-planet selected' : 'neptune-planet' } onClick={() => toggleState('neptune')}></div>
         <div className={this.state.uranus ? 'uranus-planet selected' : 'uranus-planet' } onClick={() => toggleState('uranus')}></div>
@@ -91,8 +99,10 @@ class App extends React.Component {
         <div className={this.state.venus ? 'venus-planet selected' : 'venus-planet'} onClick={() => toggleState('venus')}></div>
         <div className={this.state.mercury ? 'mercury-planet selected' : 'mercury-planet'} onClick={() => toggleState('mercury')}></div>
       </div>
-      
-        <section className="card-container">
+      <div className={this.state.notify ? 'buttons notify' : 'buttons'}>
+          <span onClick={() => this.setState({ cardClosed : !this.state.cardClosed })}>{ this.state.cardClosed ? '<' : '>' }</span>
+      </div>
+        <section className={this.state.cardClosed ? 'card-container close-card' : 'card-container open-card'}>
           {(!planet && !this.state.loading) && (
             <div className="info-panel">
               <p>Click a planet on the left to see some data xD</p>
@@ -121,10 +131,12 @@ class App extends React.Component {
               <li>Rotation Period: {planet.rotationPeriod}</li>
             </ul>
           </div>
+          
           </>
         )}
         </section>
     </div>
+    </>
     )
   }
 
